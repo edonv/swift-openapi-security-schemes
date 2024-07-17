@@ -38,7 +38,7 @@ extension BasicHTTPSecurityScheme {
             .base64EncodedString()
     }
     
-    public func mutateRequest(_ request: inout HTTPRequest, body: inout HTTPBody) {
+    public func mutateRequest(_ request: inout HTTPRequest, body: inout HTTPBody?) {
         request.headerFields[.authorization] = "Basic \(_credentials)"
     }
 }
@@ -53,7 +53,7 @@ public protocol BearerHTTPSecurityScheme: HTTPSecurityScheme {
 extension BearerHTTPSecurityScheme {
     public static var scheme: HTTPSecuritySchemeName { .bearer(format) }
     
-    public func mutateRequest(_ request: inout HTTPRequest, body: inout HTTPBody) {
+    public func mutateRequest(_ request: inout HTTPRequest, body: inout HTTPBody?) {
         request.headerFields[.authorization] = "Bearer \(accessToken)"
     }
 }
