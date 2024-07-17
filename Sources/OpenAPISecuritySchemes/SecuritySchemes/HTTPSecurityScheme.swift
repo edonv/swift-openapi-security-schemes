@@ -67,3 +67,24 @@ public enum HTTPSecuritySchemeName: Hashable, Sendable, Codable {
         case jwt = "JWT"
     }
 }
+
+// MARK: - SecuritySchemeMiddleware
+import OpenAPIRuntime
+import HTTPTypes
+
+extension SecuritySchemeMiddleware where Scheme: HTTPSecurityScheme {
+    internal func intercept(
+        _ request: HTTPRequest,
+        body: HTTPBody?,
+        baseURL: URL,
+        operationID: String,
+        next: (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
+    ) async throws -> (HTTPResponse, HTTPBody?) {
+        var request = request
+        var body = body
+        
+        self.scheme.mutateRequest(&request, body: &body)
+        
+        return try await next(request, body, baseURL)
+    }
+}
