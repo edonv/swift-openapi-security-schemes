@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import OpenAPIRuntime
+import HTTPTypes
 
 public protocol APIKeySecurityScheme: SecurityScheme {
     /// The name of the header, query or cookie parameter to be used.
@@ -28,4 +30,29 @@ public enum APIKeySecuritySchemeLocation: String, Hashable, Sendable, Codable {
 
 extension APIKeySecurityScheme {
     public static var type: SecuritySchemeType { .apiKey }
+    
+    public func applyScheme(
+        toOperation operationId: String,
+        request: inout HTTPRequest,
+        body: inout HTTPBody?
+    ) async throws {
+        switch Self.in {
+        case .query:
+            var path = request.path ?? ""
+            if path.contains("?") {
+                path.append("&")
+            } else {
+                path.append("?")
+            }
+            
+            path.append("\(Self.name)=\(self.key)")
+            
+        case .header:
+            // Adds the header field with the provided key
+            request.headerFields[.init(Self.name)!] = self.key
+            
+        case .cookie:
+            request.headerFields[.cookie] = self.key
+        }
+    }
 }
