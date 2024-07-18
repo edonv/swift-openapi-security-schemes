@@ -22,6 +22,39 @@ extension SecuritySchemeMiddleware where Scheme == Never {
     public var scheme: Never? { nil }
 }
 
+extension SecuritySchemeMiddleware {
+    /// Gets the security scheme to use for a given operation.
+    ///
+    /// This tries to use ``delegate`` first, but if it's either `nil` or its ``SecuritySchemeMiddlewareDelegate/securityScheme(_:forOperation:)`` function returns `nil`, it will fall back on ``scheme-21xl3``. If that is also `nil`, then no scheme is applied to the operation at all.
+    private func _getScheme(for operationID: String) -> (any SecurityScheme)? {
+        if let delegate,
+           let operationScheme = delegate.securityScheme(self, forOperation: operationID) {
+            return operationScheme
+        } else if let scheme {
+            return scheme
+        } else {
+            return nil
+        }
+    }
+    
+    public func intercept(
+        _ request: HTTPRequest,
+        body: HTTPBody?,
+        baseURL: URL,
+        operationID: String,
+        next: (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
+    ) async throws -> (HTTPResponse, HTTPBody?) {
+        var request = request
+        var body = body
+        
+        if let scheme = _getScheme(for: operationID) {
+            try await scheme.applyScheme(toOperation: operationID, request: &request, body: &body)
+        }
+        
+        return try await next(request, body, baseURL)
+    }
+}
+
 // MARK: - SecuritySchemeMiddlewareDelegate
 
 public protocol SecuritySchemeMiddlewareDelegate: AnyObject {
