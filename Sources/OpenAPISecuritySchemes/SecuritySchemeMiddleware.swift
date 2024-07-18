@@ -11,10 +11,23 @@ import HTTPTypes
 
 /// Generic middleware for using with an OpenAPI spec's `securityScheme`.
 public protocol SecuritySchemeMiddleware: ClientMiddleware {
+    /// The type of `SecurityScheme` this middleware uses.
+    ///
+    /// It defaults to `Never`.
     associatedtype Scheme: SecurityScheme = Never
     
+    /// An optional delegate that can be used to check if the scheme should be applied to an operation on a case-by-case basis.
+    ///
+    /// If used, the conforming middleware type should be a `class`, and this should be a `weak var`.
+    ///
+    /// If this and ``scheme-21xl3`` are both set, the scheme returned by ``SecuritySchemeMiddlewareDelegate/securityScheme(_:forOperation:)`` takes precedence over ``scheme-21xl3``. If the delegate function returns `nil`, then ``scheme-21xl3`` is used (if itself is non-`nil`).
     var delegate: (any SecuritySchemeMiddlewareDelegate)? { get set }
     
+    /// An instance of the ``SecurityScheme`` to use for all operations.
+    ///
+    /// If `nil`, it won't apply a scheme to operation calls, unless ``delegate`` is set to a non-`nil` value.
+    ///
+    /// When ``Scheme`` is set to `Never`, this value is automatically set to `nil`.
     var scheme: Scheme? { get }
 }
 
