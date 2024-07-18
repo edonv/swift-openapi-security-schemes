@@ -20,12 +20,12 @@ public protocol APIKeySecurityScheme: SecurityScheme {
     var key: String { get }
 }
 
-extension APIKeySecurityScheme {
-    public static var type: SecuritySchemeType { .apiKey }
-}
-
 public enum APIKeySecuritySchemeLocation: String, Hashable, Sendable, Codable {
     case query
     case header
     case cookie
+}
+
+extension APIKeySecurityScheme {
+    public static var type: SecuritySchemeType { .apiKey }
 }
