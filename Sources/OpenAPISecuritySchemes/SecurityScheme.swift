@@ -13,9 +13,6 @@ import Foundation
 ///
 /// See also: <https://spec.openapis.org/oas/latest.html#security-scheme-object>
 public protocol SecurityScheme {
-    /// The name of the scheme.
-    static var schemeName: String { get }
-    
     /// The type of the security scheme.
     ///
     /// Valid values are "apiKey", "http", "mutualTLS", "oauth2", "openIdConnect".
