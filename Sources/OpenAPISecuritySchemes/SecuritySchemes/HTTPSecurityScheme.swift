@@ -73,6 +73,8 @@ import OpenAPIRuntime
 import HTTPTypes
 
 extension SecuritySchemeMiddleware where Scheme: HTTPSecurityScheme {
+    // MARK: ClientMiddleware
+    
     internal func intercept(
         _ request: HTTPRequest,
         body: HTTPBody?,
