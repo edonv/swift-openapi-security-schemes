@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OpenAPIRuntime
 import HTTPTypes
 
 public protocol HTTPSecurityScheme: SecurityScheme {
@@ -13,8 +14,6 @@ public protocol HTTPSecurityScheme: SecurityScheme {
     ///
     /// The values used SHOULD be registered in the [IANA Authentication Scheme registry](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml).
     static var scheme: HTTPSecuritySchemeName { get }
-    
-    func mutateRequest(_ request: inout HTTPRequest, body: inout HTTPBody?)
 }
 
 extension HTTPSecurityScheme {
@@ -38,7 +37,11 @@ extension BasicHTTPSecurityScheme {
             .base64EncodedString()
     }
     
-    public func mutateRequest(_ request: inout HTTPRequest, body: inout HTTPBody?) {
+    public func applyScheme(
+        toOperation operationId: String,
+        request: inout HTTPRequest,
+        body: inout HTTPBody?
+    ) async throws {
         request.headerFields[.authorization] = "Basic \(_credentials)"
     }
 }
@@ -53,7 +56,11 @@ public protocol BearerHTTPSecurityScheme: HTTPSecurityScheme {
 extension BearerHTTPSecurityScheme {
     public static var scheme: HTTPSecuritySchemeName { .bearer(format) }
     
-    public func mutateRequest(_ request: inout HTTPRequest, body: inout HTTPBody?) {
+    public func applyScheme(
+        toOperation operationId: String,
+        request: inout HTTPRequest,
+        body: inout HTTPBody?
+    ) async throws {
         request.headerFields[.authorization] = "Bearer \(accessToken)"
     }
 }
@@ -65,28 +72,5 @@ public enum HTTPSecuritySchemeName: Hashable, Sendable, Codable {
     
     public enum BearerFormat: String, Hashable, Sendable, Codable {
         case jwt = "JWT"
-    }
-}
-
-// MARK: - SecuritySchemeMiddleware
-import OpenAPIRuntime
-import HTTPTypes
-
-extension SecuritySchemeMiddleware where Scheme: HTTPSecurityScheme {
-    // MARK: ClientMiddleware
-    
-    public func intercept(
-        _ request: HTTPRequest,
-        body: HTTPBody?,
-        baseURL: URL,
-        operationID: String,
-        next: (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
-    ) async throws -> (HTTPResponse, HTTPBody?) {
-        var request = request
-        var body = body
-        
-        self.scheme.mutateRequest(&request, body: &body)
-        
-        return try await next(request, body, baseURL)
     }
 }
