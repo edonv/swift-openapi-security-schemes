@@ -13,6 +13,8 @@ import HTTPTypes
 public protocol SecuritySchemeMiddleware: ClientMiddleware {
     associatedtype Scheme: SecurityScheme = Never
     
+    var delegate: (any SecuritySchemeMiddlewareDelegate)? { get set }
+    
     var scheme: Scheme? { get }
 }
 
