@@ -15,3 +15,7 @@ public protocol SecuritySchemeMiddleware: ClientMiddleware {
     
     var scheme: Scheme? { get }
 }
+
+extension SecuritySchemeMiddleware where Scheme == Never {
+    public var scheme: Never? { nil }
+}
