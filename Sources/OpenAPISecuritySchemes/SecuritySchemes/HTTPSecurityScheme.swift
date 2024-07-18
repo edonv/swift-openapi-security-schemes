@@ -75,7 +75,7 @@ import HTTPTypes
 extension SecuritySchemeMiddleware where Scheme: HTTPSecurityScheme {
     // MARK: ClientMiddleware
     
-    internal func intercept(
+    public func intercept(
         _ request: HTTPRequest,
         body: HTTPBody?,
         baseURL: URL,
