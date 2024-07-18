@@ -11,7 +11,7 @@ import HTTPTypes
 
 /// Generic middleware for using with an OpenAPI spec's `securityScheme`.
 public protocol SecuritySchemeMiddleware: ClientMiddleware {
-    associatedtype Scheme: SecurityScheme
+    associatedtype Scheme: SecurityScheme = Never
     
     var scheme: Scheme { get }
 }
