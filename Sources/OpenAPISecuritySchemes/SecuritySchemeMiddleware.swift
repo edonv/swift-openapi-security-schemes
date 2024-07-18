@@ -70,7 +70,7 @@ extension SecuritySchemeMiddleware {
 
 // MARK: - SecuritySchemeMiddlewareDelegate
 
-public protocol SecuritySchemeMiddlewareDelegate: AnyObject {
+public protocol SecuritySchemeMiddlewareDelegate: AnyObject, Sendable {
     /// Asks the delegate what security scheme to use for any given operation.
     ///
     /// Because the return type uses `any`, you can use this function to return different schemes for different operations.
