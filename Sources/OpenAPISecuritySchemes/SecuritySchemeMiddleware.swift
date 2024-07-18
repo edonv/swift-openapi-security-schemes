@@ -7,6 +7,7 @@
 
 import Foundation
 import OpenAPIRuntime
+import HTTPTypes
 
 /// Generic middleware for using with an OpenAPI spec's `securityScheme`.
 public protocol SecuritySchemeMiddleware: ClientMiddleware {
