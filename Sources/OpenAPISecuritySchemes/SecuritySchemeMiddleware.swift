@@ -13,5 +13,5 @@ import HTTPTypes
 public protocol SecuritySchemeMiddleware: ClientMiddleware {
     associatedtype Scheme: SecurityScheme = Never
     
-    var scheme: Scheme { get }
+    var scheme: Scheme? { get }
 }
