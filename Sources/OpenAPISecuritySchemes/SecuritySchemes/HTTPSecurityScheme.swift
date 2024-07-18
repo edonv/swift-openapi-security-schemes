@@ -31,6 +31,7 @@ public protocol BasicHTTPSecurityScheme: HTTPSecurityScheme {
 extension BasicHTTPSecurityScheme {
     public static var scheme: HTTPSecuritySchemeName { .basic }
     
+    /// Concatenated as `"{user-id}:{password}".base64EncodedString()`
     private var _credentials: String {
         "\(username):\(password)"
             .data(using: .utf8)!
