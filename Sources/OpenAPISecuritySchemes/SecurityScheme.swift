@@ -17,15 +17,6 @@ public protocol SecurityScheme {
     ///
     /// Valid values are "apiKey", "http", "mutualTLS", "oauth2", "openIdConnect".
     static var type: SecuritySchemeType { get }
-    
-    /// A description for security scheme.
-    ///
-    /// CommonMark syntax MAY be used for rich text representation.
-    static var description: String? { get }
-}
-
-extension SecurityScheme {
-    static public var description: String? { nil }
 }
 
 public enum SecuritySchemeType: String, Hashable, Sendable, Codable {
