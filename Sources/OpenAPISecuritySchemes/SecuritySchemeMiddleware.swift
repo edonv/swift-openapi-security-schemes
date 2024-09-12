@@ -10,7 +10,7 @@ import OpenAPIRuntime
 import HTTPTypes
 
 /// Generic middleware for using with an OpenAPI spec's `securityScheme`.
-public protocol SecuritySchemeMiddleware: ClientMiddleware {
+public protocol SecuritySchemeMiddleware: ClientMiddleware, ServerMiddleware {
     /// The type of `SecurityScheme` this middleware uses.
     ///
     /// It defaults to `Never`.
@@ -35,8 +35,6 @@ extension SecuritySchemeMiddleware where Scheme == Never {
     public var scheme: Never? { nil }
 }
 
-// MARK: - ClientMiddleware
-
 extension SecuritySchemeMiddleware {
     /// Gets the security scheme to use for a given operation.
     ///
@@ -51,6 +49,8 @@ extension SecuritySchemeMiddleware {
             return nil
         }
     }
+    
+    // MARK: - ClientMiddleware
     
     public func intercept(
         _ request: HTTPRequest,
@@ -68,6 +68,27 @@ extension SecuritySchemeMiddleware {
         }
         
         return try await next(request, body, baseURL)
+    }
+    
+    // MARK: - ServerMiddleware
+    
+    public func intercept(
+        _ request: HTTPRequest,
+        body: HTTPBody?,
+        metadata: ServerRequestMetadata,
+        operationID: String,
+        next: (HTTPRequest, HTTPBody?, ServerRequestMetadata) async throws -> (HTTPResponse, HTTPBody?)
+    ) async throws -> (HTTPResponse, HTTPBody?) {
+        // Confirm valid security scheme on incoming request before it is parsed
+        if let scheme = _getScheme(for: operationID) {
+            let isValid = try await scheme.validateScheme(for: operationID, request: request, body: body)
+            
+            if !isValid {
+                throw SecurityError.invalidSecurity(operationID: operationID)
+            }
+        }
+        
+        return try await next(request, body, metadata)
     }
 }
 
