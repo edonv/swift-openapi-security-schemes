@@ -35,6 +35,8 @@ extension SecuritySchemeMiddleware where Scheme == Never {
     public var scheme: Never? { nil }
 }
 
+// MARK: - ClientMiddleware
+
 extension SecuritySchemeMiddleware {
     /// Gets the security scheme to use for a given operation.
     ///
@@ -57,6 +59,7 @@ extension SecuritySchemeMiddleware {
         operationID: String,
         next: (HTTPRequest, HTTPBody?, URL) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
+        // Apply security scheme to request before it is sent
         var request = request
         var body = body
         
