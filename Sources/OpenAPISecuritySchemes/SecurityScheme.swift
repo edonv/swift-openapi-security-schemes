@@ -21,13 +21,13 @@ public protocol SecurityScheme {
     /// Valid values are "apiKey", "http", "mutualTLS", "oauth2", "openIdConnect".
     static var type: SecuritySchemeType { get }
     
-    /// Applies this `SecurityScheme` to an operation.
+    /// Applies this `SecurityScheme` to an outgoing request.
     /// - Parameters:
-    ///   - operationID: The identifier of the OpenAPI operation.
-    ///   - request: The HTTP request to modify.
-    ///   - body: The HTTP request body to modify.
+    ///   - operationID: The identifier of the outgoing OpenAPI operation.
+    ///   - request: The HTTP outgoing request to modify.
+    ///   - body: The HTTP outgoing request body to modify, if there is one.
     func applyScheme(
-        toOperation operationID: String,
+        to operationID: String,
         request: inout HTTPRequest,
         body: inout HTTPBody?
     ) async throws

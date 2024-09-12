@@ -13,7 +13,7 @@ extension Never: SecurityScheme {
     public static let type: SecuritySchemeType = .apiKey
     
     public func applyScheme(
-        toOperation operationID: String,
+        to operationID: String,
         request: inout HTTPTypes.HTTPRequest,
         body: inout OpenAPIRuntime.HTTPBody?
     ) async throws {}
