@@ -61,7 +61,7 @@ extension SecuritySchemeMiddleware {
         var body = body
         
         if let scheme = _getScheme(for: operationID) {
-            try await scheme.applyScheme(toOperation: operationID, request: &request, body: &body)
+            try await scheme.applyScheme(to: operationID, request: &request, body: &body)
         }
         
         return try await next(request, body, baseURL)
