@@ -38,6 +38,7 @@ extension APIKeySecurityScheme {
     ) async throws {
         switch Self.in {
         case .query:
+            // Adds the scheme to query
             var path = request.path ?? ""
             if path.contains("?") {
                 path.append("&")
