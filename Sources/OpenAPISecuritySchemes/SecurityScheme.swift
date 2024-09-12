@@ -27,7 +27,7 @@ public protocol SecurityScheme {
     ///   - request: The HTTP request to modify.
     ///   - body: The HTTP request body to modify.
     func applyScheme(
-        toOperation operationId: String,
+        toOperation operationID: String,
         request: inout HTTPRequest,
         body: inout HTTPBody?
     ) async throws

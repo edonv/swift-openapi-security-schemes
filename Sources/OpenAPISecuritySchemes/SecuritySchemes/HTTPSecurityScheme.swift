@@ -39,7 +39,7 @@ extension BasicHTTPSecurityScheme {
     }
     
     public func applyScheme(
-        toOperation operationId: String,
+        toOperation operationID: String,
         request: inout HTTPRequest,
         body: inout HTTPBody?
     ) async throws {
@@ -84,7 +84,7 @@ extension BearerHTTPSecurityScheme {
     }
     
     public func applyScheme(
-        toOperation operationId: String,
+        toOperation operationID: String,
         request: inout HTTPRequest,
         body: inout HTTPBody?
     ) async throws {

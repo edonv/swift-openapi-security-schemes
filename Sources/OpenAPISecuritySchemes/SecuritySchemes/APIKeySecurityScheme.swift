@@ -32,7 +32,7 @@ extension APIKeySecurityScheme {
     public static var type: SecuritySchemeType { .apiKey }
     
     public func applyScheme(
-        toOperation operationId: String,
+        toOperation operationID: String,
         request: inout HTTPRequest,
         body: inout HTTPBody?
     ) async throws {
