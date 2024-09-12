@@ -31,6 +31,17 @@ public protocol SecurityScheme {
         request: inout HTTPRequest,
         body: inout HTTPBody?
     ) async throws
+    
+    /// Validates that an incoming request uses this `SecurityScheme`.
+    /// - Parameters:
+    ///   - operationID: The identifier of the incoming OpenAPI operation.
+    ///   - request: The incoming HTTP request.
+    ///   - body: The incoming HTTP request body, if there is one.
+    func validateScheme(
+        for operationID: String,
+        request: HTTPRequest,
+        body: HTTPBody?
+    ) async throws -> Bool
 }
 
 public enum SecuritySchemeType: String, Hashable, Sendable, Codable {
