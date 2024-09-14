@@ -59,4 +59,39 @@ extension APIKeySecurityScheme {
             request.headerFields.cookie = cookieHeaderValue
         }
     }
+    
+    public func validateScheme(
+        for operationID: String,
+        request: HTTPRequest,
+        body: HTTPBody?
+    ) async throws -> Bool {
+        switch Self.in {
+        case .query:
+            // Checks the query for correct scheme
+            guard let url = request.url,
+                  let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                  let items = components.queryItems else { break }
+            
+            let queryItem = URLQueryItem(name: Self.name, value: self.key)
+            guard items.contains(queryItem) else {
+                throw SecurityError.invalidSecurity(operationID: <#T##String#>)
+            }
+            
+        case .header:
+            // Checks the header fields for the provided key
+            guard request.headerFields.contains(where: {
+                $0.name.canonicalName == Self.name
+                && $0.value == self.key
+            }) else {
+                throw SecurityError.invalidSecurity(operationID: <#T##String#>)
+            }
+            
+        case .cookie:
+            // Checks the header fields for the provided key
+            guard let cookieField = request.headerFields.cookie?[Self.name],
+                  cookieField.value == self.key else {
+                throw SecurityError.invalidSecurity(operationID: <#T##String#>)
+            }
+        }
+    }
 }
