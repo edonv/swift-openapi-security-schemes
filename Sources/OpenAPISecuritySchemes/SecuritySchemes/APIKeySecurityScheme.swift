@@ -8,6 +8,9 @@
 import Foundation
 import OpenAPIRuntime
 import HTTPTypes
+import HTTPTypesFoundation
+
+import HTTPFieldTypes
 
 public protocol APIKeySecurityScheme: SecurityScheme {
     /// The name of the header, query or cookie parameter to be used.
@@ -47,7 +50,13 @@ extension APIKeySecurityScheme {
             request.headerFields[.init(Self.name)!] = self.key
             
         case .cookie:
-            request.headerFields[.cookie] = self.key
+            // Adds the key to the Cookie header
+            var cookieHeaderValue = request.headerFields.cookie ?? .init([])
+            
+            let cookie = HTTPCookie(name: Self.name, value: self.key)
+            cookieHeaderValue.add(cookie: cookie)
+            
+            request.headerFields.cookie = cookieHeaderValue
         }
     }
 }
