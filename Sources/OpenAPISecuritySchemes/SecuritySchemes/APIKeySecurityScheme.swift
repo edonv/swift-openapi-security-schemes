@@ -39,14 +39,8 @@ extension APIKeySecurityScheme {
         switch Self.in {
         case .query:
             // Adds the scheme to query
-            var path = request.path ?? ""
-            if path.contains("?") {
-                path.append("&")
-            } else {
-                path.append("?")
-            }
-            
-            path.append("\(Self.name)=\(self.key)")
+            let queryItem = URLQueryItem(name: Self.name, value: self.key)
+            request.url?.appendBackport(queryItems: [queryItem])
             
         case .header:
             // Adds the header field with the provided key
