@@ -73,14 +73,7 @@ extension BearerHTTPSecurityScheme {
     ///
     /// add option to pass the token in the header (default), form-encoded body parameter (only if Content-Type == `application/x-www-form-urlencoded`, method is not GET, https://datatracker.ietf.org/doc/html/rfc6750#section-2.2), or query parameter (`access_token` query field, with `Cache-Control` header set to `no-store`)
     private var _credentials: String {
-//        switch self.location {
-//        case .header:
-        return "Bearer \(accessToken)"
-//        case .formEncodedBody:
-//
-//        case .queryParameter:
-//
-//        }
+        "Bearer \(accessToken)"
     }
     
     public func applyScheme(
@@ -88,14 +81,7 @@ extension BearerHTTPSecurityScheme {
         request: inout HTTPRequest,
         body: inout HTTPBody?
     ) async throws {
-//        switch self.location {
-//        case .header:
         request.headerFields[.authorization] = _credentials
-//        case .formEncodedBody:
-//
-//        case .queryParameter:
-//
-//        }
     }
 }
 
