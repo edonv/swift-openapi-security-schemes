@@ -45,6 +45,10 @@ public protocol SecurityScheme {
     ) async throws
 }
 
+extension SecurityScheme {
+    public typealias SchemeError = SecuritySchemeError<Self>
+}
+
 public enum SecuritySchemeType: String, Hashable, Sendable, Codable {
     case apiKey
     case http
