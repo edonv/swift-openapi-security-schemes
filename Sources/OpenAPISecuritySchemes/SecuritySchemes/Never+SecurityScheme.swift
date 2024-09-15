@@ -17,4 +17,10 @@ extension Never: SecurityScheme {
         request: inout HTTPTypes.HTTPRequest,
         body: inout OpenAPIRuntime.HTTPBody?
     ) async throws {}
+    
+    public func validateScheme(
+        for operationID: String,
+        request: HTTPRequest,
+        body: HTTPBody?
+    ) async throws {}
 }

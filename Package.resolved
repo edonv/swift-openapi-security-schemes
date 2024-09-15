@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "swift-http-field-types",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/edonv/swift-http-field-types.git",
+      "state" : {
+        "revision" : "bf6bae82338d1d5023fc1db781f179770ac1dfe0",
+        "version" : "0.3.5"
+      }
+    },
+    {
       "identity" : "swift-http-types",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-http-types",
