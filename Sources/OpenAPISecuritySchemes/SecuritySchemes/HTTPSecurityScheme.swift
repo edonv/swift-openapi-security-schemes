@@ -13,7 +13,7 @@ public protocol HTTPSecurityScheme: SecurityScheme {
     /// The name of the HTTP Authorization scheme to be used in the `Authorization` header as defined in [[RFC7235](https://spec.openapis.org/oas/latest.html#bib-RFC7235)].
     ///
     /// The values used SHOULD be registered in the [IANA Authentication Scheme registry](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml).
-    static var scheme: HTTPSecuritySchemeType { get }
+    static var httpSchemeType: HTTPSecuritySchemeType { get }
 }
 
 extension HTTPSecurityScheme {
@@ -29,7 +29,7 @@ public protocol BasicHTTPSecurityScheme: HTTPSecurityScheme {
 }
 
 extension BasicHTTPSecurityScheme {
-    public static var scheme: HTTPSecuritySchemeType { .basic }
+    public static var httpSchemeType: HTTPSecuritySchemeType { .basic }
     
     /// Concatenated as `"{user-id}:{password}".base64EncodedString()`
     private var _credentials: String {
@@ -63,7 +63,7 @@ public protocol BearerHTTPSecurityScheme: HTTPSecurityScheme {
 
 extension BearerHTTPSecurityScheme {
     static var bearerFormat: HTTPSecuritySchemeType.BearerFormat? { nil }
-    public static var scheme: HTTPSecuritySchemeType { .bearer(bearerFormat) }
+    public static var httpSchemeType: HTTPSecuritySchemeType { .bearer(bearerFormat) }
     
     /// `access_token`
     ///
