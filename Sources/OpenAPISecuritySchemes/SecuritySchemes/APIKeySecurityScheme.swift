@@ -74,7 +74,7 @@ extension APIKeySecurityScheme {
             
             let queryItem = URLQueryItem(name: Self.name, value: self.key)
             guard items.contains(queryItem) else {
-                throw SecurityError.invalidSecurity(operationID: <#T##String#>)
+                throw SchemeError(operationID: operationID, request: request)
             }
             
         case .header:
@@ -83,14 +83,14 @@ extension APIKeySecurityScheme {
                 $0.name.canonicalName == Self.name
                 && $0.value == self.key
             }) else {
-                throw SecurityError.invalidSecurity(operationID: <#T##String#>)
+                throw SchemeError(operationID: operationID, request: request)
             }
             
         case .cookie:
             // Checks the header fields for the provided key
             guard let cookieField = request.headerFields.cookie?[Self.name],
                   cookieField.value == self.key else {
-                throw SecurityError.invalidSecurity(operationID: <#T##String#>)
+                throw SchemeError(operationID: operationID, request: request)
             }
         }
     }
