@@ -104,7 +104,7 @@ public enum HTTPSecuritySchemeType: Hashable, Sendable {
     
     case bearer(BearerFormat?)
     
-    public enum BearerFormat: String, Hashable, Sendable, Codable {
+    public enum BearerFormat: String, Hashable, Sendable {
         case jwt = "JWT"
     }
 }
