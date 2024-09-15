@@ -99,7 +99,7 @@ extension BearerHTTPSecurityScheme {
     }
 }
 
-public enum HTTPSecuritySchemeType: Hashable, Sendable, Codable {
+public enum HTTPSecuritySchemeType: Hashable, Sendable {
     case basic
     
     case bearer(BearerFormat?)
