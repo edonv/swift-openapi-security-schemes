@@ -45,6 +45,17 @@ extension BasicHTTPSecurityScheme {
     ) async throws {
         request.headerFields[.authorization] = _credentials
     }
+    
+    public func validateScheme(
+        for operationID: String,
+        request: HTTPRequest,
+        body: HTTPBody?
+    ) async throws {
+        guard let authHeader = request.headerFields[.authorization],
+              authHeader == _credentials else {
+            throw SchemeError(operationID: operationID, request: request)
+        }
+    }
 }
 
 // MARK: - BearerHTTPSecurityScheme
@@ -82,6 +93,17 @@ extension BearerHTTPSecurityScheme {
         body: inout HTTPBody?
     ) async throws {
         request.headerFields[.authorization] = _credentials
+    }
+    
+    public func validateScheme(
+        for operationID: String,
+        request: HTTPRequest,
+        body: HTTPBody?
+    ) async throws {
+        guard let authHeader = request.headerFields[.authorization],
+              authHeader == _credentials else {
+            throw SchemeError(operationID: operationID, request: request)
+        }
     }
 }
 
