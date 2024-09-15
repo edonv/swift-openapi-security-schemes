@@ -73,7 +73,7 @@ public protocol BearerHTTPSecurityScheme: HTTPSecurityScheme {
 }
 
 extension BearerHTTPSecurityScheme {
-    static var bearerFormat: HTTPSecuritySchemeType.BearerFormat? { nil }
+    public static var bearerFormat: HTTPSecuritySchemeType.BearerFormat? { nil }
     public static var httpSchemeType: HTTPSecuritySchemeType { .bearer(bearerFormat) }
     
     /// `access_token`
