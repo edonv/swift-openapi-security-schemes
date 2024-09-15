@@ -6,4 +6,4 @@ A WIP
 
 - [ ] Add support for more types of security schemes.
 - [x] Add OpenAPIRuntime.ClientMiddleware support
-- [ ] Add OpenAPIRuntime.ServerMiddleware support
+- [x] Add OpenAPIRuntime.ServerMiddleware support
