@@ -22,7 +22,5 @@ extension Never: SecurityScheme {
         for operationID: String,
         request: HTTPRequest,
         body: HTTPBody?
-    ) async throws -> Bool {
-        return true
-    }
+    ) async throws {}
 }

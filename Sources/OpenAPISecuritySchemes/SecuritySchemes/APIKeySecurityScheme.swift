@@ -64,7 +64,7 @@ extension APIKeySecurityScheme {
         for operationID: String,
         request: HTTPRequest,
         body: HTTPBody?
-    ) async throws -> Bool {
+    ) async throws {
         switch Self.in {
         case .query:
             // Checks the query for correct scheme

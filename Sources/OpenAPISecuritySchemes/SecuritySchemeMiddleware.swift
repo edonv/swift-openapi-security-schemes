@@ -81,11 +81,7 @@ extension SecuritySchemeMiddleware {
     ) async throws -> (HTTPResponse, HTTPBody?) {
         // Confirm valid security scheme on incoming request before it is parsed
         if let scheme = _getScheme(for: operationID) {
-            let isValid = try await scheme.validateScheme(for: operationID, request: request, body: body)
-            
-            if !isValid {
-                throw SecurityError.invalidSecurity(operationID: operationID)
-            }
+            try await scheme.validateScheme(for: operationID, request: request, body: body)
         }
         
         return try await next(request, body, metadata)

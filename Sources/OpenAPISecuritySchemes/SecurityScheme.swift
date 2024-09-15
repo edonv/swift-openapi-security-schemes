@@ -37,11 +37,12 @@ public protocol SecurityScheme {
     ///   - operationID: The identifier of the incoming OpenAPI operation.
     ///   - request: The incoming HTTP request.
     ///   - body: The incoming HTTP request body, if there is one.
+    /// - Throws: Throws an error if the appropriate security scheme is not present in the provided request.
     func validateScheme(
         for operationID: String,
         request: HTTPRequest,
         body: HTTPBody?
-    ) async throws -> Bool
+    ) async throws
 }
 
 public enum SecuritySchemeType: String, Hashable, Sendable, Codable {
