@@ -9,11 +9,19 @@ import Foundation
 import OpenAPIRuntime
 import HTTPTypes
 
+/// Each flow defaults to `nil`.
 public protocol OAuth2SecurityScheme: BearerHTTPSecurityScheme {
-    var implicitFlow: OAuth2Flows.Implicit { get }
-    var passwordFlow: OAuth2Flows.Password { get }
-    var clientCredentialsFlow: OAuth2Flows.ClientCredentials { get }
-    var authorizationCodeFlow: OAuth2Flows.AuthorizationCode { get }
+    var implicitFlow: OAuth2Flows.Implicit? { get }
+    var passwordFlow: OAuth2Flows.Password? { get }
+    var clientCredentialsFlow: OAuth2Flows.ClientCredentials? { get }
+    var authorizationCodeFlow: OAuth2Flows.AuthorizationCode? { get }
+}
+
+extension OAuth2SecurityScheme {
+    var implicitFlow: OAuth2Flows.Implicit? { nil }
+    var passwordFlow: OAuth2Flows.Password? { nil }
+    var clientCredentialsFlow: OAuth2Flows.ClientCredentials? { nil }
+    var authorizationCodeFlow: OAuth2Flows.AuthorizationCode? { nil }
 }
 
 private protocol OAuth2FlowBaseProtocol: Hashable, Sendable {
