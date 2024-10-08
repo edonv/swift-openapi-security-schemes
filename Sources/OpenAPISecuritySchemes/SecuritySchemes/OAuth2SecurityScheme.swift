@@ -10,13 +10,13 @@ import OpenAPIRuntime
 import HTTPTypes
 
 public protocol OAuth2SecurityScheme: BearerHTTPSecurityScheme {
-    var implicitFlow: OAuthFlows.Implicit { get }
-    var passwordFlow: OAuthFlows.Password { get }
-    var clientCredentialsFlow: OAuthFlows.ClientCredentials { get }
-    var authorizationCodeFlow: OAuthFlows.AuthorizationCode { get }
+    var implicitFlow: OAuth2Flows.Implicit { get }
+    var passwordFlow: OAuth2Flows.Password { get }
+    var clientCredentialsFlow: OAuth2Flows.ClientCredentials { get }
+    var authorizationCodeFlow: OAuth2Flows.AuthorizationCode { get }
 }
 
-private protocol OAuthFlowBaseProtocol: Hashable, Sendable {
+private protocol OAuth2FlowBaseProtocol: Hashable, Sendable {
     /// The URL to be used for obtaining refresh tokens.
     ///
     /// The OAuth2 standard requires the use of TLS.
@@ -28,22 +28,22 @@ private protocol OAuthFlowBaseProtocol: Hashable, Sendable {
     var scopes: [String: String] { get }
 }
 
-private protocol OAuthFlowAuthURLProtocol: OAuthFlowBaseProtocol {
+private protocol OAuth2FlowAuthURLProtocol: OAuth2FlowBaseProtocol {
     /// The authorization URL to be used for this flow.
     ///
     /// The OAuth2 standard requires the use of TLS.
     var authorizationURL: URL { get }
 }
 
-private protocol OAuthFlowTokenURLProtocol: OAuthFlowBaseProtocol {
+private protocol OAuth2FlowTokenURLProtocol: OAuth2FlowBaseProtocol {
     /// The token URL to be used for this flow.
     ///
     /// The OAuth2 standard requires the use of TLS.
     var tokenURL: URL { get }
 }
 
-public enum OAuthFlows {
-    public struct Implicit: OAuthFlowAuthURLProtocol {
+public enum OAuth2Flows {
+    public struct Implicit: OAuth2FlowAuthURLProtocol {
         public let authorizationURL: URL
         public let refreshURL: URL
         public let scopes: [String: String]
@@ -59,7 +59,7 @@ public enum OAuthFlows {
         }
     }
     
-    public struct Password: OAuthFlowTokenURLProtocol {
+    public struct Password: OAuth2FlowTokenURLProtocol {
         public let tokenURL: URL
         public let refreshURL: URL
         public let scopes: [String: String]
@@ -75,7 +75,7 @@ public enum OAuthFlows {
         }
     }
     
-    public struct ClientCredentials: OAuthFlowTokenURLProtocol {
+    public struct ClientCredentials: OAuth2FlowTokenURLProtocol {
         public let tokenURL: URL
         public let refreshURL: URL
         public let scopes: [String: String]
@@ -91,7 +91,7 @@ public enum OAuthFlows {
         }
     }
     
-    public struct AuthorizationCode: OAuthFlowTokenURLProtocol, OAuthFlowAuthURLProtocol {
+    public struct AuthorizationCode: OAuth2FlowTokenURLProtocol, OAuth2FlowAuthURLProtocol {
         public let tokenURL: URL
         public let authorizationURL: URL
         public let refreshURL: URL
