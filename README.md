@@ -11,6 +11,15 @@ A WIP
 - [ ] HTTP
   - [x] Basic
   - [x] Bearer
+  - [ ] Digest
+    - https://datatracker.ietf.org/doc/html/rfc7616
+  - [ ] DPoP
+  - [ ] GNAP
+  - [ ] HOBA
+  - [ ] Mutual
+  - [ ] Negotiate
+  - [ ] OAuth
+  - [ ] PrivateToken
 - [ ] Mutual TLS
 - [x] OAuth2
 - [ ] OpenID Connect Discovery
