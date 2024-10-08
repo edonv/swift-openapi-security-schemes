@@ -52,7 +52,7 @@ extension SecurityScheme {
 public enum SecuritySchemeType: String, Hashable, Sendable, Codable {
     case apiKey
     case http
-    case mutualTLS
+//    case mutualTLS
     case oauth2
-    case openIdConnect
+//    case openIdConnect
 }
