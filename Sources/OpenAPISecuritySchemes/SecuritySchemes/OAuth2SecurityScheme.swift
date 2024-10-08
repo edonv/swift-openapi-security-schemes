@@ -1,5 +1,5 @@
 //
-//  OAuthSecurityScheme.swift
+//  OAuth2SecurityScheme.swift
 //  
 //
 //  Created by Edon Valdman on 9/15/24.
@@ -9,7 +9,7 @@ import Foundation
 import OpenAPIRuntime
 import HTTPTypes
 
-public protocol OAuthSecurityScheme: BearerHTTPSecurityScheme {
+public protocol OAuth2SecurityScheme: BearerHTTPSecurityScheme {
     var implicitFlow: OAuthFlows.Implicit { get }
     var passwordFlow: OAuthFlows.Password { get }
     var clientCredentialsFlow: OAuthFlows.ClientCredentials { get }
@@ -111,6 +111,6 @@ public enum OAuthFlows {
     }
 }
 
-extension OAuthSecurityScheme {
+extension OAuth2SecurityScheme {
     public static var type: SecuritySchemeType { .oauth2 }
 }
