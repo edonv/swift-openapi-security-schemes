@@ -50,9 +50,18 @@ extension SecurityScheme {
 }
 
 public enum SecuritySchemeType: String, Hashable, Sendable, Codable {
+    /// Use ``APIKeySecurityScheme`` protocol.
     case apiKey
+    
+    /// Use one of ``HTTPSecurityScheme``'s sub-protocols.
     case http
+    
+//    /// Use ``MutualTLSSecurityScheme`` protocol.
 //    case mutualTLS
+    
+    /// Use ``OAuth2SecurityScheme`` protocol.
     case oauth2
+    
+//    /// Use ``OpenIdConnectSecurityScheme`` protocol.
 //    case openIdConnect
 }

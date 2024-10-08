@@ -9,6 +9,7 @@ import Foundation
 import OpenAPIRuntime
 import HTTPTypes
 
+/// Don’t conform to this protocol directly. Instead, use one of the sub-protocols, depending on the ``httpSchemeType``.
 public protocol HTTPSecurityScheme: SecurityScheme {
     /// The name of the HTTP Authorization scheme to be used in the `Authorization` header as defined in [[RFC7235](https://spec.openapis.org/oas/latest.html#bib-RFC7235)].
     ///
@@ -108,9 +109,14 @@ extension BearerHTTPSecurityScheme {
 }
 
 public enum HTTPSecuritySchemeType: Hashable, Sendable {
+    /// Use ``BasicHTTPSecurityScheme`` protocol.
     case basic
     
+    /// Use ``BearerHTTPSecurityScheme`` protocol.
     case bearer(BearerFormat?)
+    
+    /// Use ``BearerHTTPSecurityScheme`` protocol.
+    public static let bearer = HTTPSecuritySchemeType.bearer(nil)
     
     public enum BearerFormat: String, Hashable, Sendable {
         case jwt = "JWT"
